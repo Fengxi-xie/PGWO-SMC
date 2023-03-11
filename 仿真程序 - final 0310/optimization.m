@@ -38,7 +38,7 @@ model.c = 0.1;
 model.d = 0.01;
 model.time = 120;%每次控制仿真时间
 
-param.MaxIt = 30;%迭代次数
+param.MaxIt = 20;%迭代次数
 param.nPop = 2;%种群数目
 
 param.wmax = 0.8;

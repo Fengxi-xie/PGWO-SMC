@@ -157,19 +157,19 @@ legend('WPSO-SM','PSO-SM','SM','PID','Desired Path');
 axis equal;
 
 figure(3)
-plot(t,rad2deg(delta),'linewidth',1.5);
+plot(t,(delta),'linewidth',1.5);
 xlabel('time/s');
 ylabel('Steering Angle/°');
 legend('WPSO-SM','PSO-SM','SM','BP','PID');
 
 figure(4)
-plot(t,rad2deg(error_yaw1),'linewidth',1.5);
+plot(t,(error_yaw1),'linewidth',1.5);
 xlabel('time/s');
 ylabel('Angular Orientation Error/°');
 legend('WPSO-SM','PSO-SM','SM','BP','PID');
 
 figure(5)
-plot(t,rad2deg(psi),'linewidth',1.5);
+plot(t,(psi),'linewidth',1.5);
 xlabel('time/s');
 ylabel('Angular Orientation/°');
 legend('WPSO-SM','PSO-SM','SM','BP','PID');

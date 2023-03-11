@@ -145,15 +145,15 @@ end
 end
 
 figure(3)
-plot(t,rad2deg(delta),'linewidth',1.5);
+plot(t,(delta),'linewidth',1.5);
 hold on;
 
 figure(4)
-plot(t,rad2deg(error_yaw1),'linewidth',1.5);
+plot(t,(error_yaw1),'linewidth',1.5);
 hold on;
 
 figure(5)
-plot(t,rad2deg(psi),'linewidth',1.5);
+plot(t,(psi),'linewidth',1.5);
 hold on;
 
 
