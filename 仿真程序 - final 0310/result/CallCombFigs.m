@@ -1,0 +1,1 @@
+CombFigs('Local diviation',{'Wolf-fig6.fig','PSO-fig6.fig'})
