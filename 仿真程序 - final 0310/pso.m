@@ -59,7 +59,9 @@ BestCost=zeros(MaxIt,1);
 
 %%
     
- realmin=exp(-10*5);
+realmin=exp(-10*5);
+C1 = exp( ( particle(i).Best.Position -  GlobalBest.Position)/ abs( GlobalBest.Position + realmin ) );
+C2 = exp( ( -particle(i).Best.Position + GlobalBest.Position));
 for it=1:MaxIt
     for i=1:nPop
          
@@ -80,8 +82,6 @@ for it=1:MaxIt
             C2 = param.c1min;
         end
         
-         C1 = exp( ( particle(i).Best.Position -  GlobalBest.Position)/ abs( GlobalBest.Position + realmin ) );
-         C2 = exp( ( -particle(i).Best.Position + GlobalBest.Position));
         % Update Velocity
         particle(i).Velocity  = w*particle(i).Velocity ...
             + C1*rand(VarSize).*(particle(i).Best.Position-particle(i).Position) ...
