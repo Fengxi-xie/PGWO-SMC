@@ -1,4 +1,4 @@
-function [ GlobalBest  , BestCost ] =  pso( param   , model , CostFunction )
+function [ GlobalBest  , BestCost ] =  pso_ini( param   , model , CostFunction )
 
 nVar = model.nVar ;       %  节点个数
 VarSize=[1 nVar];   %  决策变量维度
@@ -8,9 +8,14 @@ VarMax= 1 ;% 自变量取值   高阶
 %% PSO Parameters
 MaxIt=  param.MaxIt ;          %    迭代次数
 nPop= param.nPop ;           %  种群数目
-param.index = 2;
-VelMax =  0.01* (VarMax - VarMin );    %   X  最大速度
-VelMin =  -VelMax ;                    %    X 最小速度
+w= param.w ;                %   权重
+wdamp=param.wdamp ;         %    退化率
+
+
+VelMax =  0.1* (VarMax - VarMin );    %   X  最大  速度
+VelMin    =  -VelMax ;                    %    X 最小速度
+
+  
 
 %%  初始化
 rand('seed', sum(clock));
@@ -32,9 +37,10 @@ particle=repmat(empty_particle,nPop,1);
 
 for i=1:nPop
     
-    particle(i).Position = [0.5342 0.0810 0.0269 0.1175 0.1645 0.1327 0.004*0.5 0.264*0.5 0.7429*0.5 0.0015*0.5 0.31339*0.5 0.1964*0.5];
+  
+    particle(i).Position =  [0.5342 0.0810 0.0269 0.1175 0.1645 0.1327 0.004*0.5 0.264*0.5 0.7429*0.5 0.0015*0.5 0.31339*0.5 0.1964*0.5];
 
-    particle(i).Velocity = unifrnd(VelMin, VelMax, VarSize);
+    particle(i).Velocity  =    unifrnd(      VelMin    ,  VelMax  ,  VarSize  ) ;
 
     [particle(i).Cost, particle(i).Sol]=CostFunction(particle(i).Position);
     
@@ -59,33 +65,13 @@ BestCost=zeros(MaxIt,1);
 
 %%
     
- realmin=exp(-10*5);
+ realmin=exp(-10*50);
 for it=1:MaxIt
     for i=1:nPop
          
-        if it <= MaxIt/3
-        	w = param.wmax;
-            C1 = param.c1max;
-            C2 = param.c1max;
-        elseif it <= 2*MaxIt/3
-            mu = 0.3+(0.6-0.3)*rand(1);
-            w = mu + randn(1);
-            mu = 0.1+(1.5-0.1)*rand(1);
-            c1 = mu + randn(1);
-            mu = 0.1+(1.5-0.1)*rand(1);
-            c2 = mu + randn(1);
-        else
-            w = param.wmin;
-            C1 = param.c1min;
-            C2 = param.c1min;
-        end
-        
-         C1 = exp( ( particle(i).Best.Position -  GlobalBest.Position)/ abs( GlobalBest.Position + realmin ) );
-         C2 = exp( ( -particle(i).Best.Position + GlobalBest.Position));
         % Update Velocity
         particle(i).Velocity  = w*particle(i).Velocity ...
-            + C1*rand(VarSize).*(particle(i).Best.Position-particle(i).Position) ...
-            + C2.*rand(VarSize).*(GlobalBest.Position-particle(i).Position);
+            + rand(VarSize).*(particle(i).Best.Position-particle(i).Position);
         
         % Update Velocity Bounds
         particle(i).Velocity = max(particle(i).Velocity,VelMin);
@@ -111,45 +97,23 @@ for it=1:MaxIt
             particle(i).Best.Sol=particle(i).Sol;
             
             % Update Global Best
-            if particle(i).Best.Cost < GlobalBest.Cost
+            if particle(i).Best.Cost<GlobalBest.Cost
                 GlobalBest=particle(i).Best;
             end
             
         end
     end
-    for i=1:nPop
+    %%
     
-  
-    newparticle(i).Position = [0.5342 0.0810 0.0269 0.1175 0.1645 0.1327 0.004*1.5 0.264*1.5 0.7429*1.5 0.0015*1.5 0.31339*1.5 0.1964*1.5];
-
-    newparticle(i).Velocity =  VelMin + (VelMax-VelMin)*rand(1,VarSize(2));
-
-    [newparticle(i).Cost, newparticle(i).Sol]=CostFunction(newparticle(i).Position);
-    
-
-    newparticle(i).Best.Position=newparticle(i).Position;
-    newparticle(i).Best.Cost=newparticle(i).Cost;
-    newparticle(i).Best.Sol=newparticle(i).Sol;
-    
- 
-    if newparticle(i).Best.Cost < GlobalBest.Cost
-        
-        GlobalBest = newparticle(i).Best;
-        
-    end
-    
-    end
-
 
     %%
     
     % 更新最优解
     BestCost(it)=GlobalBest.Cost;
     
-    
-    disp(it);
-    
-%     if ~mod( it, param.ShowIteration ) | isequal( it , MaxIt )
+    %权重更新
+    w=w*wdamp;
+
     if isequal( it , MaxIt )
         gcf  = figure(1);
         % Plot Solution
@@ -158,7 +122,7 @@ for it=1:MaxIt
         GlobalBest.BestCost = BestCost(1:it)  ;
         GlobalBest.MaxIt = MaxIt ;
         
-        PlotSolution(GlobalBest ,model,param)
+        PlotSolution_psoini(GlobalBest ,model)
         pause( 0.01 );
     end
     

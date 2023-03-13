@@ -1,5 +1,5 @@
-function PlotSolution_Wolf(BestSol,model,param)
-%%      ------------------»æÍ¼---------------------------%%
+function PlotSolution_psoini(BestSol,model,param)
+%%      ------------------ç»˜å›¾---------------------------%%
 
 figure(1);
 hold on;
@@ -21,37 +21,12 @@ k4 = model.k4_min + BestSol.Position(10)*(model.k4_max - model.k4_min);
 k5 = model.k5_min + BestSol.Position(11)*(model.k5_max - model.k5_min);
 k6 = model.k6_min + BestSol.Position(12)*(model.k6_max - model.k6_min);
 
-disp('ÓÅ»¯ºóµÄalhpa1Îª£º');
-disp(alpha_1);
-disp('ÓÅ»¯ºóµÄbeta1Îª£º');
-disp(beta_1);
-disp('ÓÅ»¯ºóµÄalhpa2Îª£º');
-disp(alpha_2);
-disp('ÓÅ»¯ºóµÄbeta2Îª£º');
-disp(beta_2);
-disp('ÓÅ»¯ºóµÄdelta1Îª£º');
-disp(delta_s1);
-disp('ÓÅ»¯ºóµÄdelta2Îª£º');
-disp(delta_s2);
-disp('ÓÅ»¯ºóµÄk1Îª£º');
-disp(k1);
-disp('ÓÅ»¯ºóµÄk2Îª£º');
-disp(k2);
-disp('ÓÅ»¯ºóµÄk3Îª£º');
-disp(k3);
-disp('ÓÅ»¯ºóµÄk4Îª£º');
-disp(k4);
-disp('ÓÅ»¯ºóµÄk5Îª£º');
-disp(k5);
-disp('ÓÅ»¯ºóµÄk6Îª£º');
-disp(k6);
-
 
 total_time = 120;
 step_count = 0.05;
 t = 0:step_count:total_time;
 
-%%      ------------------³õÊ¼»¯---------------------------%%
+%%      ------------------åˆå§‹åŒ–---------------------------%%
 x = zeros(total_time/step_count+1, 1);
 y = zeros(total_time/step_count+1, 1);
 x_d = zeros(total_time/step_count+1, 1);
@@ -71,25 +46,25 @@ error_v1 = zeros(total_time/step_count+1, 1);
 error_v2 = zeros(total_time/step_count+1, 1);
 F_d = zeros(total_time/step_count+1, 1);
 error_location = zeros(total_time/step_count+1, 1);
-%%  ---- ³õÊ¼×´Ì¬ÉèÖÃ---------%%
+%%  ---- åˆå§‹çŠ¶æ€è®¾ç½®---------%%
 x(1) = 2;
 y(1) = 0;
 psi(1) = pi/2;
 w(1) = 0;
 v(1) = 0;
-%%  ----------¿ØÖÆ²ÎÊıµ÷½Ú-------%%
+%%  ----------æ§åˆ¶å‚æ•°è°ƒèŠ‚-------%%
 
 kappa1 = 0.5;
 kappa2 = 0.3;
 
-%%    --------------     Ä£ĞÍ²ÎÊı    --------------------    %%
-l = 2.85;%Öá¾à
-vr = 20;%ÆÚÍûËÙ¶È
-%%    --------------     ¶¨²½³¤·ÂÕæ¿ªÊ¼    --------------------    %%
+%%    --------------     æ¨¡å‹å‚æ•°    --------------------    %%
+l = 2.85;%è½´è·
+vr = 20;%æœŸæœ›é€Ÿåº¦
+%%    --------------     å®šæ­¥é•¿ä»¿çœŸå¼€å§‹    --------------------    %%
 [x_d,y_d] = path();
 for i = 1:(total_time/step_count)
     
-    %%    --------------     ÆÚÍûº½Ïò    --------------------    %%
+    %%    --------------     æœŸæœ›èˆªå‘    --------------------    %%
     k = length(x_d);
     while k >=1
         if sqrt((x(i)-x_d(k))^2+(y(i)-y_d(k))^2) < sqrt((x(i)-x_d(data_close(i)))^2+(y(i)-y_d(data_close(i)))^2)
@@ -148,8 +123,8 @@ for i = 1:(total_time/step_count)
     end
 
 
-    %%    --------------     ½Ç¶È¿ØÖÆ    --------------------    %%
-    temp1 = mod(psi(i),2*pi);%ÒÔÏÂ¼¸ĞĞÊÇÎªÁË¾«×¼¼ÆËã×ªÏò½ÇÎó²î
+    %%    --------------     è§’åº¦æ§åˆ¶    --------------------    %%
+    temp1 = mod(psi(i),2*pi);%ä»¥ä¸‹å‡ è¡Œæ˜¯ä¸ºäº†ç²¾å‡†è®¡ç®—è½¬å‘è§’è¯¯å·®
     temp2 = mod(psi_d(i),2*pi);
     if temp1-temp2 > pi
         temp1 = temp1 - 2*pi; 
@@ -157,7 +132,7 @@ for i = 1:(total_time/step_count)
         temp2 = temp2 - 2*pi; 
     end
 
-    error_yaw1(i) = temp1 - temp2;%¶¨Òå×ªÏò½ÇÎó²î
+    error_yaw1(i) = temp1 - temp2;%å®šä¹‰è½¬å‘è§’è¯¯å·®
     if i>=2
         d_error_yaw1 = (error_yaw1(i) - error_yaw1(i-1))/step_count;
     else
@@ -165,10 +140,10 @@ for i = 1:(total_time/step_count)
     end
     error_yaw2(i) = k1*error_yaw1(i);
     
-    %»¬Ä£Ãæ
+    %æ»‘æ¨¡é¢
     s1 = k2*error_yaw1(i) + error_yaw2(i);
 
-    %·Ö¶Îº¯Êı
+    %åˆ†æ®µå‡½æ•°
     if abs(s1) >= delta_s1
         f_1 = abs(s1)*(abs(s1) - delta_s1);
     else
@@ -178,9 +153,9 @@ for i = 1:(total_time/step_count)
     w(i) =  - (1/(2*k2) + exp(0)*(abs(s1))^beta_1)*s1 - k2*(error_yaw2(i) - k1*error_yaw1(i));
 
 
-    %%    --------------     ËÙ¶È¿ØÖÆ    --------------------    %%
+    %%    --------------     é€Ÿåº¦æ§åˆ¶    --------------------    %%
     dd_v_d(i) = 0;
-    error_v1(i) = v(i) - vr;%¶¨ÒåËÙ¶ÈÎó²î
+    error_v1(i) = v(i) - vr;%å®šä¹‰é€Ÿåº¦è¯¯å·®
     if i>=2
         d_error_v1 = (error_v1(i) - error_v1(i-1))/step_count;
     else
@@ -188,10 +163,10 @@ for i = 1:(total_time/step_count)
     end
     error_v2(i) = k1*error_v1(i);
 
-    %»¬Ä£Ãæ
+    %æ»‘æ¨¡é¢
     s2 = k2*error_v1(i) + error_v2(i);
 
-    %·Ö¶Îº¯Êı
+    %åˆ†æ®µå‡½æ•°
     if abs(s2) >= delta_s2
         f_2 = abs(s2)*(abs(s2) - delta_s2);
     else
@@ -202,8 +177,8 @@ for i = 1:(total_time/step_count)
     
     v(i+1) = v(i) + F_d(i)*step_count;
     
-     %%    --------------     Ä£ĞÍ¼ÆËã    --------------------    %%
-    temp1 = mod(psi(i),2*pi);%ÒÔÏÂ¼¸ĞĞÊÇÎªÁË¾«×¼¼ÆËã×ªÏò½ÇÎó²î
+     %%    --------------     æ¨¡å‹è®¡ç®—    --------------------    %%
+    temp1 = mod(psi(i),2*pi);%ä»¥ä¸‹å‡ è¡Œæ˜¯ä¸ºäº†ç²¾å‡†è®¡ç®—è½¬å‘è§’è¯¯å·®
     temp2 = mod(psi_d(i),2*pi);
     if temp1-temp2 > pi
         temp1 = temp1 - 2*pi; 
@@ -211,7 +186,7 @@ for i = 1:(total_time/step_count)
         temp2 = temp2 - 2*pi; 
     end
 
-    error_yaw1(i) = temp1 - temp2;%¶¨Òå×ªÏò½ÇÎó²î
+    error_yaw1(i) = temp1 - temp2;%å®šä¹‰è½¬å‘è§’è¯¯å·®
     if i>=2
         d_error_yaw1 = (error_yaw1(i) - error_yaw1(i-1))/step_count;
     else
@@ -225,31 +200,31 @@ for i = 1:(total_time/step_count)
     
     temp = R*[v(i) w(i)]';
     
-    %%    --------------     ×´Ì¬Á¿¸üĞÂ    --------------------    %%
+    %%    --------------     çŠ¶æ€é‡æ›´æ–°    --------------------    %%
     x(i+1) = x(i) + temp(1)*step_count;
     y(i+1) = y(i) + temp(2)*step_count;
     psi(i+1) = mod(psi(i) + temp(3)*step_count,2*pi);
     
-    %%    --------------     ¼ÆËãÎó²îÁ¿    --------------------    %%
+    %%    --------------     è®¡ç®—è¯¯å·®é‡    --------------------    %%
     error_location(i) = abs(D(2));
 end
 
 delta(i+1) = delta(i);
-k_p = 13;
-PIDfigure_Wolf;
+k_p = 6*10^(0);
+PIDfigure;
 error_yaw1(i+1) = error_yaw1(i);
 x_d(i+1) = x_d(i);
 y_d(i+1) = y_d(i);
 delta= mod(delta,2*pi);
 
 figure(2)
-plot(x,y,'k','linewidth',1.5);
+plot(x,y,'linewidth',1.5);
 hold on;
 axis equal;
 hold on;
 
 figure(6)
-plot(t,error_location,'k','linewidth',1.5);
+plot(t,error_location,'linewidth',1.5);
 ylim([-0.1 6]);
 
 hold on;

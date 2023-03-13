@@ -5,7 +5,7 @@ figure(1);
 plot(BestSol.BestCost,'LineWidth',2);
 xlabel('Iteration time');
 ylabel('Cost');
-legend('WPSO-SM','PSO-SM','CPSO-SM','CO-SM');
+legend('WPSO-SM','CO-SM','IPSO-SM');
 grid on;
 
 alpha_1 = model.alpha1_min + BestSol.Position(1)*(model.alpha1_max - model.alpha1_min);
@@ -235,7 +235,7 @@ for i = 1:(total_time/step_count)
 end
 
 delta(i+1) = delta(i);
-k_p = 18;
+k_p = 10.673;
 PIDfigure;
 error_yaw1(i+1) = error_yaw1(i);
 x_d(i+1) = x_d(i);

@@ -147,36 +147,19 @@ end
 figure(2)
 hold on;
 plot(x,y,'linewidth',1.5);
-% hold on;
-plot(x_d,y_d,'linewidth',1.5);
-xlabel('X/m');
-ylabel('Y/m');
-legend('WPSO-SM','PSO-SM','SM','PID','Desired Path');
-axis equal;
+
 
 figure(3)
 plot(t,(delta),'linewidth',1.5);
-xlabel('time/s');
-ylabel('Steering Angle/rad');
-legend('WPSO-SM','PSO-SM','SM','PID');
 
 figure(4)
 plot(t,(error_yaw1),'linewidth',1.5);
-xlabel('time/s');
-ylabel('Angular Orientation Error/rad');
-legend('WPSO-SM','PSO-SM','SM','PID');
 
 figure(5)
 plot(t,(psi),'linewidth',1.5);
-xlabel('time/s');
-ylabel('Angular Orientation/rad');
-legend('WPSO-SM','PSO-SM','SM','PID');
 
 figure(6)
 plot(t,error_location,'linewidth',1.5);
-xlabel('time/s');
-ylabel('Location Deviation/m');
-legend('WPSO-SM','PSO-SM','SM','PID');
 
 
 disp('反步法平均位置误差');
