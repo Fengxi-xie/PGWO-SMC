@@ -1,3 +1,5 @@
+clear all;
+clc;
 
 %%    --------------     期望路径    --------------------    %%
 omega_n = 0.1;
@@ -246,38 +248,25 @@ error_yaw1(i+1) = error_yaw1(i);
 x_d(i+1) = x_d(i);
 y_d(i+1) = y_d(i);
 error_location(i+1) = error_location(i);
-w = mod(w,2*pi);
-psi = mod(psi,2*pi);
-for i = 1:1:total_time/step_count+1
-if psi(i)>pi
-    psi(i) = psi(i)-2*pi;
-end
-end
 
 figure(2)
 plot(x,y,'linewidth',1.5);
 hold on;
 
 figure(3)
-plot(t,(delta),'linewidth',1.5);
+plot(t,delta/15,'linewidth',1.5);
 hold on;
 
 figure(4)
-plot(t,(error_yaw1),'linewidth',1.5);
+plot(t,error_yaw1,'linewidth',1.5);
 hold on;
 
 figure(5)
-plot(t,(psi),'linewidth',1.5);
+plot(t,psi,'linewidth',1.5);
 hold on;
 
 figure(6)
 plot(t,error_location,'linewidth',1.5);
-ylim([-0.1 3]);
+ylim([-0.1 6]);
 hold on;
 
-disp('滑模平均位置误差');
-disp(mean(error_location));
-
-
-disp('滑模最大位置误差');
-disp(max(error_location));

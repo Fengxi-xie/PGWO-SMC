@@ -32,7 +32,7 @@ particle=repmat(empty_particle,nPop,1);
 
 for i=1:nPop
     
-    particle(i).Position = [0.5342 0.0810 0.0269 0.1175 0.1645 0.1327 0.004*0.5 0.264*0.5 0.7429*0.5 0.0015*0.5 0.31339*0.5 0.1964*0.5];
+    particle(i).Position = [0.5342 0.0810 0.0269 0.1175 0.1645 0.1327 0.004*1.5 0.264*1.5 0.7429*1.5 0.0015*1.5 0.31339*1.5 0.1964*1.5];
 
     particle(i).Velocity = unifrnd(VelMin, VelMax, VarSize);
 

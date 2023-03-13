@@ -1,4 +1,5 @@
-
+clear all;
+close all;
 
 
 total_time = 30;
@@ -29,7 +30,7 @@ error_y = zeros(total_time/step_count+1, 1);
 %%  ---- 初始状态设置---------%%
 x(1) = 0;
 y(1) = -2;
-psi(1) = pi/2;
+psi(1) = 0;
 w(1) = 0;
 v(1) = 0;
 %%  ----------控制参数调节-------%%

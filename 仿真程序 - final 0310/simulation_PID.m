@@ -1,3 +1,5 @@
+clear all;
+clc;
 
 global InteTotal_1 In_last_1
 
@@ -19,7 +21,6 @@ error_yaw2 = zeros(total_time/step_count+1, 1);
 delta = zeros(total_time/step_count+1, 1);
 error_x = zeros(total_time/step_count+1, 1);
 error_y = zeros(total_time/step_count+1, 1);
-error_location = zeros(total_time/step_count+1, 1);
 %%  ---- 初始状态设置---------%%
 x(1) = 2;
 y(1) = 0;
@@ -31,7 +32,7 @@ InteTotal_1 = 0;
 In_last_1 = 0;
 
 %%  ----------控制参数调节-------%%
-k_p = 2.8*10^(0);
+k_p = 0.7*10^(0);
 k_i = 1*10^(-3);
 k_d = 1*10^(1);
 
@@ -138,12 +139,6 @@ error_location(i+1) = error_location(i);
 x_d(i+1) = x_d(i);
 y_d(i+1) = y_d(i);
 psi = mod(psi,2*pi);
-w = mod(w,2*pi);
-for i = 1:1:total_time/step_count+1
-if psi(i)>pi
-    psi(i) = psi(i)-2*pi;
-end
-end
 
 figure(2)
 hold on;
@@ -152,37 +147,29 @@ plot(x,y,'linewidth',1.5);
 plot(x_d,y_d,'linewidth',1.5);
 xlabel('X/m');
 ylabel('Y/m');
-legend('WPSO-SM','CO-SM','IPSO-SM','SM','BP','PD','PID','Desired Path');
+legend('WPSO-SM','PSO-SM','SM','PID','Desired Path');
 axis equal;
 
 figure(3)
-plot(t,(delta),'linewidth',1.5);
+plot(t,delta,'linewidth',1.5);
 xlabel('time/s');
-ylabel('Steering Angle/rad');
-legend('WPSO-SM','CO-SM','IPSO-SM','SM','BP','PD','PID');
+ylabel('Steering Angle/°');
+legend('WPSO-SM','PSO-SM','SM','PID');
 
 figure(4)
-plot(t,(error_yaw1),'linewidth',1.5);
+plot(t,error_yaw1,'linewidth',1.5);
 xlabel('time/s');
-ylabel('Angular Orientation Error/rad');
-legend('WPSO-SM','CO-SM','IPSO-SM','SM','BP','PD','PID');
+ylabel('Angular Orientation Error/°');
+legend('WPSO-SM','PSO-SM','SM','PID');
 
 figure(5)
-plot(t,(psi),'linewidth',1.5);
+plot(t,w,'linewidth',1.5);
 xlabel('time/s');
-ylabel('Angular Orientation/rad');
-legend('WPSO-SM','CO-SM','IPSO-SM','SM','BP','PD','PID');
+ylabel('Angular Orientation/°');
+legend('WPSO-SM','PSO-SM','SM','PID');
 
 figure(6)
 plot(t,error_location,'linewidth',1.5);
 xlabel('time/s');
 ylabel('Location Deviation/m');
-legend('WPSO-SM','CO-SM','IPSO-SM','SM','BP','PD','PID');
-
-
-disp('pid平均位置误差');
-disp(mean(error_location));
-
-
-disp('pid最大位置误差');
-disp(max(error_location));
+legend('WPSO-SM','PSO-SM','SM','PID');

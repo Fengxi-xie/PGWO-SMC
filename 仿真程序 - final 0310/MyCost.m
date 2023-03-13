@@ -179,7 +179,7 @@ for i = 1:(total_time/step_count)
 end
 cost = model.a*data_e1 + model.b*data_u1 + model.c*data_e2 + model.d*data_u2;
 if isnan(cost)
-    cost = 10^30;
+    cost = 10^10;
 end
 sol = [alpha_1 beta_1 alpha_2 beta_2 delta_s1 delta_s2 k1 k2 k3 k4 k5 k6];
 % catch

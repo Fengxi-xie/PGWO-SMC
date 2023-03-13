@@ -5,7 +5,7 @@ figure(1);
 plot(BestSol.BestCost,'LineWidth',2);
 xlabel('Iteration time');
 ylabel('Cost');
-legend('WPSO-SM','CO-SM','IPSO-SM');
+legend('WPSO-SM','PSO-SM');
 grid on;
 
 alpha_1 = model.alpha1_min + BestSol.Position(1)*(model.alpha1_max - model.alpha1_min);
@@ -235,19 +235,12 @@ for i = 1:(total_time/step_count)
 end
 
 delta(i+1) = delta(i);
-k_p = 10.673;
 PIDfigure;
 error_yaw1(i+1) = error_yaw1(i);
 x_d(i+1) = x_d(i);
 y_d(i+1) = y_d(i);
 delta= mod(delta,2*pi);
-
-w = mod(w,2*pi);
-for i = 1:1:total_time/step_count+1
-if psi(i)>pi
-    psi(i) = psi(i)-2*pi;
-end
-end
+error_location(i+1) = error_location(i);
 
 figure(2)
 plot(x,y,'linewidth',1.5);
@@ -263,10 +256,6 @@ ylim([-0.1 6]);
 hold on;
 
 simulation_slidingmodev3;
-
-simulation_backstepping;
-
-simulation_PD;
 
 simulation_PID;
 

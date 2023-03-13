@@ -38,11 +38,9 @@ model.c = 0.1;
 model.d = 0.01;
 model.time = 120;%每次控制仿真时间
 
-param.MaxIt =1;%迭代次数
-param.nPop = 1;%种群数目
+param.MaxIt = 2;%迭代次数
+param.nPop = 2;%种群数目
 
-param.w = 0.8;
-param.wdamp = 0.99;
 param.wmax = 0.8;
 param.wmin = 0.5;
 param.c1max = 2;
@@ -55,6 +53,4 @@ param.index = 1;
 %%      ------------------运行算法---------------------------%%
 CostFunction= @(x) MyCost(x,model);%设置目标函数
 [GlobalBest, BestCost] = Wolf(param, model, CostFunction);
-%[GlobalBest1, BestCost1] = pso_ini(param, model, CostFunction);
-[GlobalBest2, BestCost2] = Cuckoo(param, model, CostFunction);
-[GlobalBest3, BestCost3] = pso(param, model, CostFunction);
+[GlobalBest1, BestCost1] = pso(param, model, CostFunction);

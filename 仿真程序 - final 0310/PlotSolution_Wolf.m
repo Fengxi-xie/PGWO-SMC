@@ -235,23 +235,22 @@ for i = 1:(total_time/step_count)
 end
 
 delta(i+1) = delta(i);
-k_p = 13;
-PIDfigure_Wolf;
+PIDfigure;
 error_yaw1(i+1) = error_yaw1(i);
 x_d(i+1) = x_d(i);
 y_d(i+1) = y_d(i);
 delta= mod(delta,2*pi);
+error_location(i+1) = error_location(i);
 
 figure(2)
-plot(x,y,'k','linewidth',1.5);
+plot(x,y,'linewidth',1.5);
 hold on;
 axis equal;
 hold on;
 
 figure(6)
-plot(t,error_location,'k','linewidth',1.5);
+plot(t,error_location,'linewidth',1.5);
 ylim([-0.1 6]);
-
 hold on;
 
 

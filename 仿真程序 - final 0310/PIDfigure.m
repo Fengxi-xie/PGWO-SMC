@@ -30,6 +30,11 @@ InteTotal_1 = 0;
 In_last_1 = 0;
 
 %%  ----------控制参数调节-------%%
+if param.index == 1
+    k_p = 15*10^(0);
+else
+    k_p = 5*10^(0);
+end
 k_i = 1*10^(-3);
 k_d = 1*10^(1);
 
@@ -133,29 +138,17 @@ error_yaw1(i+1) = error_yaw1(i);
 x_d(i+1) = x_d(i);
 y_d(i+1) = y_d(i);
 error_location(i+1) = error_location(i);
-for i = 1:1:(total_time/step_count+1)
-if psi(i)>pi
-    psi(i) = psi(i)-2*pi;
-end
-end
 
 figure(3)
-plot(t,(delta),'linewidth',1.5);
+plot(t,delta,'linewidth',1.5);
 hold on;
 
 figure(4)
-plot(t,(error_yaw1),'linewidth',1.5);
+plot(t,error_yaw1,'linewidth',1.5);
 hold on;
 
 figure(5)
-plot(t,(psi),'linewidth',1.5);
+plot(t,psi,'linewidth',1.5);
 hold on;
 
 
-
-disp('粒子群平均位置误差');
-disp(mean(error_location));
-
-
-disp('粒子群最大位置误差');
-disp(max(error_location));
